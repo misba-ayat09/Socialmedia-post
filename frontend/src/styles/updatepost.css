@@ -1,0 +1,92 @@
+/* Styles for the UpdatePost Component */
+.update-post {
+    background-image: url('../bg3.jpg'); /* Replace with your actual image path */
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.update-post header h2 {
+    font-size: 2rem;
+    color: #ffffff;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.update-post main {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 30px 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 100%;
+}
+
+.update-post-form div {
+    margin-bottom: 15px;
+}
+
+.update-post-form label {
+    display: block;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 5px;
+}
+
+.update-post-form input,
+.update-post-form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.update-post-form textarea {
+    resize: vertical;
+    height: 100px;
+}
+
+.update-post-form .form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.update-post-form .form-actions button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.update-post-form .form-actions button:hover {
+    background-color: #0056b3;
+}
+
+.update-post-form .form-actions button[type='button'] {
+    background-color: #6c757d;
+}
+
+.update-post-form .form-actions button[type='button']:hover {
+    background-color: #495057;
+}
+
+.update-post p {
+    color: red;
+    font-size: 1rem;
+    text-align: center;
+}

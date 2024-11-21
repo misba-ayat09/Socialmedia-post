@@ -41,53 +41,100 @@ async function createPost(req, res) {
 }
 
 async function getPosts(req, res) {
-    console.log("Inside getPosts function"); 
+    console.log("Inside getPosts function");
     console.log("Query parameters received:", req.query);
+
     const db = getDB();
-    const query = {};
     const { author, tags, page = 1, limit = 10 } = req.query;
-    console.log("Author parameter in getPosts:", author); 
-    console.log("Tags parameter in getPosts:", tags);
+
+    const matchQuery = {};
 
     if (author) {
         try {
-            query.author = new ObjectId(author);
+            const authorDoc = await db.collection('users').findOne({ username: author.trim() });
+            if (!authorDoc) {
+                res.writeHead(404, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ message: 'Author not found' }));
+                return;
+            }
+            matchQuery.author = new ObjectId(authorDoc._id);
         } catch (err) {
-            console.error("Invalid author ObjectId:", err);
-            res.writeHead(400, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ message: 'Invalid author ID' }));
+            console.error("Error finding author by name:", err);
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ message: 'Internal server error while searching for author' }));
             return;
         }
     }
 
     if (tags) {
-        query.tags = { $in: tags.split(',').map(tag => tag.trim()) };
+        matchQuery.tags = { $in: tags.split(',').map(tag => tag.trim()) };
     }
 
     try {
         const posts = await db.collection('posts')
-            .find(query)
-            .skip((page - 1) * parseInt(limit))
-            .limit(parseInt(limit))
+            .find(matchQuery)
+            .skip((page - 1) * parseInt(limit, 10))
+            .limit(parseInt(limit, 10))
             .toArray();
-    
+
         if (posts.length === 0) {
             res.writeHead(404, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ message: 'No posts found' }));
-        } else {
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify(posts));
+            return;
         }
+
+        // Fetch author details for each post
+        const enrichedPosts = await Promise.all(
+            posts.map(async (post) => {
+                const authorDoc = await db.collection('users').findOne({ _id: post.author });
+                return {
+                    ...post,
+                    authorUsername: authorDoc ? authorDoc.username : 'Unknown Author',
+                };
+            })
+        );
+
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(enrichedPosts));
     } catch (error) {
-        console.error("Error fetching posts:", error); 
+        console.error("Error fetching posts:", error);
         res.writeHead(500, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ message: 'Internal server error' }));
     }
 }
 
-async function getPostById(postId) {
+async function getPostById(postId, res) {
+    console.log("Inside getPostById, postId:", postId); // Log the postId received
+
     const db = getDB();
-    return await db.collection('posts').findOne({ _id: ObjectId(postId) });
+
+    // Validate ObjectId
+    if (!ObjectId.isValid(postId)) {
+        console.log("Invalid ObjectId:", postId); // Log invalid ObjectId
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ message: 'Invalid post ID format' }));
+        return;
+    }
+
+    try {
+        console.log("Querying database for post with ID:", postId); // Log the query
+        const post = await db.collection('posts').findOne({ _id: new ObjectId(postId) });
+
+        if (!post) {
+            console.log("Post not found for ID:", postId); // Log if no document is found
+            res.writeHead(404, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ message: 'Post not found' }));
+            return;
+        }
+
+        console.log("Post found:", post); // Log the fetched post
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(post));
+    } catch (error) {
+        console.error("Error fetching post:", error); // Log the error
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ message: 'Internal server error' }));
+    }
 }
 
 async function updatePost(req, res) {

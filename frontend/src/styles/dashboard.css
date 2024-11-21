@@ -1,0 +1,157 @@
+/* Dashboard Styles */
+.dashboard {
+    background: url('../bg3.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+/* Header Styles */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.welcome-username {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.create-post-btn, .logout-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.create-post-btn:hover, .logout-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Main Content Styles */
+.posts-container {
+    padding: 50px 20px;
+    text-align: center;
+    max-width: 600px;
+    max-height: 900px;
+    margin: 0 auto;
+    color: #333;
+}
+
+.posts-container h2 {
+    margin-bottom: 20px;
+    color: black;
+}
+
+.post-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.post-card {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative; /* Added for menu positioning */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.post-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Three-dot menu container */
+/* Three-dot menu container */
+.menu-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: inline-block;
+}
+
+/* Three-dot menu icon */
+.menu-icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+    position: absolute;
+    top: 25px;
+    right: 0;
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 120px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    display: none; /* Initially hidden */
+}
+
+/* Show dropdown when menuOpen is equal to post ID */
+.menu-container.active .dropdown-menu {
+    display: block;
+}
+
+/* Use the menuOpen state to toggle the active class on menu-container */
+.menu-container[data-active="true"] .dropdown-menu {
+    display: block;
+}
+
+
+.dropdown-menu button {
+    width: 100%;
+    padding: 0.5rem;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.dropdown-menu button:hover {
+    background-color: #f1f1f1;
+}
+
+/* Other Post Card Styles */
+.post-tags {
+    margin-top: 10px;
+    color: #666;
+}
+
+.post-image-container {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.post-image {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.post-date {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #888;
+}

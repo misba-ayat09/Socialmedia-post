@@ -1,8 +1,6 @@
-
 const { register, login } = require('../controllers/AuthController');
-const { createPost, getPosts, updatePost, deletePost } = require('../controllers/PostsController');
+const { createPost, getPosts, updatePost, deletePost, getPostById } = require('../controllers/PostsController');
 const authenticate = require('../middleware/Auth'); 
-
 
 function parseQuery(url) {
     const query = {};
@@ -35,6 +33,13 @@ const routes = {
     },
     '/posts/delete': {
         DELETE: [authenticate, (req, res) => deletePost(req, res)] 
+    },
+    '/posts/:postId': {
+    GET: (req, res) => {
+        const { postId } = req.params; // Use req.params to access dynamic value
+        console.log("Fetching post by ID:", postId);
+        getPostById(postId, res);
+        }
     }
 };
 

@@ -1,21 +1,24 @@
 const jwt = require('jsonwebtoken');
 
-// Middleware for authentication
 function authenticate(req, res, next) {
-  const token = req.headers['authorization']?.split(' ')[1];
-  console.log(token); 
+    const token = req.headers['authorization']?.split(' ')[1];
+    console.log('Token:', token);
 
-  if (!token) {
-    return res.status(401).json({ message: 'Unauthorized' });
-  }
-
-  jwt.verify(token, 'DkvqBSPuy5hXpJwAW8rYm2tgT39VnbQ6', (err, decoded) => {
-    if (err) {
-      return res.status(403).json({ message: 'Forbidden' });
+    if (!token) {
+        res.writeHead(401, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ message: 'Unauthorized' }));
+        return;
     }
-    req.user = decoded;
-    next();
-  });
+
+    jwt.verify(token, 'DkvqBSPuy5hXpJwAW8rYm2tgT39VnbQ6', (err, decoded) => {
+        if (err) {
+            res.writeHead(403, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ message: 'Forbidden' }));
+            return;
+        }
+        req.user = decoded;
+        next();
+    });
 }
 
 module.exports = authenticate;

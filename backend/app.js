@@ -40,24 +40,46 @@ function parseQuery(url) {
 }
 
 function handleRequest(req, res) {
-  const url = req.url.split('?')[0]; 
-  req.query = parseQuery(req.url); 
-  const method = req.method;
-  const route = routes[url]; 
-  
-  console.log("Request URL:", url); 
-  console.log("Request Method:", method); 
-  console.log("Parsed Query:", req.query); 
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-  if (route && route[method]) {
-    const handlers = route[method]; 
+  if (req.method === 'OPTIONS') {
+    res.writeHead(204);
+    return res.end();
+  }
+
+  const url = req.url.split('?')[0];
+  req.query = parseQuery(req.url);
+  const method = req.method;
+
+  console.log("Request URL:", url);
+  console.log("Request Method:", method);
+  console.log("Parsed Query:", req.query);
+
+  // Dynamic route matching
+  for (const route in routes) {
+    const dynamicRouteMatch = route.match(/^\/posts\/:postId$/);
+    if (dynamicRouteMatch && url.startsWith('/posts/')) {
+      const postId = url.split('/posts/')[1];
+      req.params = { postId };
+      console.log("Dynamic route matched with postId:", postId);
+      if (routes[route][method]) {
+        return routes[route][method](req, res);
+      }
+    }
+  }
+
+  // Static route matching
+  if (routes[url] && routes[url][method]) {
+    const handlers = routes[url][method];
     if (Array.isArray(handlers)) {
-      return handleMiddlewares(req, res, handlers, 0); 
+      return handleMiddlewares(req, res, handlers, 0);
     } else {
       return handlers(req, res);
     }
   }
-  
+
   res.writeHead(404, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify({ message: 'Not Found' }));
 }
@@ -78,7 +100,7 @@ function handleMiddlewares(req, res, handlers, index) {
 async function startServer() {
   await connectDB(); 
   const server = http.createServer(handleRequest); 
-  server.listen(3000, () => console.log('Server running on port 3000')); 
+  server.listen(5000, () => console.log('Server running on port 5000')); 
 }
 
 startServer();

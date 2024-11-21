@@ -60,7 +60,12 @@ async function login(req, res) {
       const token = jwt.sign({ userId: user._id, email: user.email }, SECRET, { expiresIn: '1h' });
 
       res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: 'Login successful', token }));
+      res.end(JSON.stringify({ 
+        message: 'Login successful', 
+        token, 
+        userId: user._id, 
+        username: user.username 
+      }));
     } catch (error) {
       res.writeHead(500, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: 'Error processing request', error }));

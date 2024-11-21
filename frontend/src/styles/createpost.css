@@ -1,0 +1,79 @@
+/* Scoped styles for CreatePostPage */
+.create-post-page {
+    background-image: url('../bg3.jpg'); /* Replace with your image URL */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.create-post-container {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 2rem;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    color: white;
+    text-align: center;
+}
+
+.create-post-title {
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: white;
+}
+
+.create-post-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.create-post-formGroup {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.create-post-formGroup label {
+    flex: 1;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    text-align: left;
+}
+
+.create-post-formGroup input,
+.create-post-formGroup textarea {
+    flex: 2;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    color: white;
+    background-color: transparent; /* Optional: Remove if not needed */
+}
+
+.create-post-submitButton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin: 0 auto;
+    transition: background-color 0.3s;
+    width: 50%;
+}
+
+.create-post-submitButton:hover {
+    background-color: #0056b3;
+}

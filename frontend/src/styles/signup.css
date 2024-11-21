@@ -1,0 +1,80 @@
+/* Signup Page Styles */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;  /* Full viewport height */
+    background: url('../bg3.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;  /* Text color */
+    font-family: Arial, sans-serif;
+}
+
+/* Centered Signup Form */
+.form-container {
+    background-color: rgba(0, 0, 0, 0.8); /* Dark background with slight opacity */
+    padding: 40px 30px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;  /* Set a max-width for the form */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: #fff;  /* Text color inside the form */
+}
+
+/* h2 Styling */
+.form-container h2 {
+    color: white; /* Heading color */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Input Fields Styling */
+.form-container input {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+    font-size: 16px;
+    outline: none;
+}
+
+.form-container input:focus {
+    border-color: #007bff;
+}
+
+/* Submit Button Styling */
+.form-container button {
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-container button:hover {
+    background-color: #0056b3;
+}
+
+/* Message Styling */
+.container p {
+    text-align: center;
+    color: #ddd;
+    font-size: 14px;
+}
+
+.container p a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.container p a:hover {
+    text-decoration: underline;
+}
